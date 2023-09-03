@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tathya.ai</title>
+  <link rel="icon" type="image/x-icon" href="assets/search.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <script>
+    let currentPage = 0;
+
+    function scrollToPage(pageIndex) {
+      const pages = document.querySelectorAll('.page');
+      if (pageIndex >= 0 && pageIndex < pages.length) {
+        pages[currentPage].classList.add('hidden');
+        currentPage = pageIndex;
+        pages[currentPage].classList.remove('hidden');
+        updateNavigation();
+      }
+    }
+
+    document.addEventListener('wheel', (e) => {
+      if (e.deltaY > 0) {
+        scrollToPage(currentPage + 1);
+      } else if (e.deltaY < 0) {
+        scrollToPage(currentPage - 1);
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        scrollToPage(currentPage + 1);
+      } else if (e.key === 'ArrowUp') {
+        scrollToPage(currentPage - 1);
+      }
+    });
+
+    function updateNavigation() {
+      const navigationLinks = document.querySelectorAll('nav ul li a');
+      navigationLinks.forEach((link, index) => {
+        if (index === currentPage) {
+          link.classList.add('selected');
+        } else {
+          link.classList.remove('selected');
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#home" onclick="scrollToPage(0)" class="selected" style="background-image: assets/home-bg.jpg;">Home</a></li>
+      <li><a href="#features" onclick="scrollToPage(1)">Features</a></li>
+    </ul>
+  </nav>
+  <div class="page-container">
+  <section class="page" id="home">
+    <div class="content" id = "title">
+      <h1>Welcome to तथ्य</h1>
+      <p>Select any text, right-click, and fact-check the information.</p>
+    </div>
+    <div class="download-container">
+      <a href="assets/FakeNewsChromeExtension.zip" class="download-button">
+       <i class="fas fa-download"></i> Download Now
+      </a>
+    </div>
+  </section>
+  <section class="page hidden" id="features">
+    <div class="content">
+      <p>Select text on a webpage, right-click, and choose the fact-check option to verify claims instantly.</p>
+      <p>Our extension uses trusted sources to provide accurate and up-to-date information.</p>
+    </div>
+    <div class="image-gallery">
+      <img src="assets/working1.png" alt="Fact-Check Extension Image 1">
+      <img src="assets/working2.png" alt="Fact-Check Extension Image 2">
+    </div>
+  </section>
+</div>
+</body>
+</html>
